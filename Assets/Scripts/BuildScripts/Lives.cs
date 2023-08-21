@@ -7,7 +7,7 @@ public class Lives : MonoBehaviour
 {
     private static Lives instance = null;
     private Text gameLivesText;
-
+    private Canvas canvas;
     public static Lives Instance
     {
         get
@@ -46,13 +46,26 @@ public class Lives : MonoBehaviour
     {
         print("Lives initialized");
         Vector2 vec = new Vector2(944, 758);
+        canvas = GetComponent<Canvas>();
 
-        transform.position = Vector3.zero;
+        transform.position = new Vector3(267.1f,0f,0f);
         transform.rotation = Quaternion.identity;
         transform.localScale = Vector3.one;
 
         gameLivesText = gameObject.AddComponent<Text>();
         gameLivesText.text = "Lives: ";
         gameLivesText.PixelAdjustPoint(vec);
+
+        Font arialFont = Resources.GetBuiltinResource<Font>("Arial.ttf");
+        if (arialFont != null)
+        {
+            gameLivesText.font = arialFont;
+        }
+        else
+        {
+            Debug.Log("Font asset not found");
+        }
+
+        // transform.SetParent(canvas.transform);
     }
 }

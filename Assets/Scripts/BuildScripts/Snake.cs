@@ -11,7 +11,6 @@ public class Snake : MonoBehaviour
     [SerializeField] int lifes;
 
     private Vector3 headPositon;
-    // private Transform snakeContainer;
 
     public Snake()
     {
@@ -21,9 +20,6 @@ public class Snake : MonoBehaviour
     private void Awake()
     {
         snakeParts = new List<GameObject>();
-        // snakeContainer = new GameObject("Snake").transform;
-        // snakeContainer.position = snakeHead.transform.position;
-
         snakeParts.Add(snakeHead); // add HEAD of snake
         headPositon = snakeHead.transform.position;
 
@@ -44,8 +40,6 @@ public class Snake : MonoBehaviour
     {
         Debug.Log("Collision snake!");
         Debug.Log(other.gameObject.name);
-        // Food foodInstance = ;
-        // float healthRecover = foodInstance.getHealthPoints();
 
         if (other.gameObject.name == "Food")
         {

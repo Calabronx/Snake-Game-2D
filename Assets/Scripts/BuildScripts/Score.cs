@@ -53,6 +53,17 @@ public class Score : MonoBehaviour
 
         gameScoreText = gameObject.AddComponent<Text>();
         gameScoreText.text = "Score: ";
+        
+
+        Font arialFont = Resources.GetBuiltinResource<Font>("Arial.ttf");
+        if (arialFont != null)
+        {
+            gameScoreText.font = arialFont;
+        }
+        else
+        {
+            Debug.Log("Font asset not found");
+        }
         gameScoreText.PixelAdjustPoint(pixelVec);
     }
 }
