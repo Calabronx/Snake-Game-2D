@@ -10,11 +10,12 @@ public sealed class GameManager : MonoBehaviour
     {
         ScreenBorder.Instance.Initialize();
         ScreenField.Instance.Initialize();
-
+        CanvasText.Instance.Initialize();
         Score.Instance.Initialize();
         Lives.Instance.Initialize();
+        SnakeGame.Instance.Initialize();
+        Food.Instance.Initialize();
         Snake snake = Snake.GetInstance();
         SnakeController controller = SnakeController.GetInstance();
-        Food food = Food.GetInstance();
     }
 }
