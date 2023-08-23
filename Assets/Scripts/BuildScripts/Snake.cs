@@ -81,7 +81,7 @@ public class Snake : MonoBehaviour
                 yield return StartCoroutine(MoveSnake(Direction.DOWN));
                 //Debug.Log ("We are moving DOWN");
             }
-            if (InputHelper.GetStandardMoveDownDirection())
+            if (InputHelper.GetStandardMoveRightDirection())
             {
                 yield return StartCoroutine(MoveSnake(Direction.RIGHT));
                 //Debug.Log ("We are moving RIGHT");
@@ -219,18 +219,17 @@ public class Snake : MonoBehaviour
                             yield break;
                         }
 
-                        segmentRect = CheckForValidRightPosition(){
-                            if (segmentRect.x != 0)
-                            {
-                                BuildSnakeSegment(segmentRect);
-                                snakeLength++;
-                                moveDelay = Mathf.Max(0.05f, moveDelay - 0.01f);
-                            }
+                        segmentRect = CheckForValidRightPosition();
+                        if (segmentRect.x != 0)
+                        {
+                            BuildSnakeSegment(segmentRect);
+                            snakeLength++;
+                            moveDelay = Mathf.Max(0.05f, moveDelay - 0.01f);
                         }
-                        // // toggle the audio clip and play
-                        // audio.clip = (audio.clip == move1) ? move2 : move1;
-                        // audio.Play();
                     }
+                    // // toggle the audio clip and play
+                    // audio.clip = (audio.clip == move1) ? move2 : move1;
+                    // audio.Play();
                 }
                 break;
             case Direction.RIGHT:
@@ -293,9 +292,120 @@ public class Snake : MonoBehaviour
         return false;
     }
 
+    private Rect CheckForValidDownPosition()
+    {
+        if (snakePos[snakePos.Count - 1].y != 654)
+        {
+            return new Rect(snakePos[snakePos.Count - 1].x, snakePos[snakePos.Count - 1].y - 20, 20, 20);
+        }
+
+        return new Rect(0, 0, 0, 0);
+    }
+
+    private Rect CheckForValidUpPosition()
+    {
+        if (snakePos[snakePos.Count - 1].y != 94)
+        {
+            return new Rect(snakePos[snakePos.Count - 1].x, snakePos[snakePos.Count - 1].y + 20, 20, 20);
+        }
+        return new Rect(0, 0, 0, 0);
+    }
+
+    private Rect CheckForValidLeftPosition()
+    {
+        if (snakePos[snakePos.Count - 1].x != 22)
+        {
+            return new Rect(snakePos[snakePos.Count - 1].x - 20, snakePos[snakePos.Count - 1].y, 20, 20);
+        }
+
+        return new Rect(0, 0, 0, 0);
+    }
+
+
+    private Rect CheckForValidRightPosition()
+    {
+        if (snakePos[snakePos.Count - 1].x != 982)
+        {
+            return new Rect(snakePos[snakePos.Count - 1].x + 20, snakePos[snakePos.Count - 1].y, 20, 20);
+        }
+
+        return new Rect(0, 0, 0, 0);
+    }
+
+    private void BuildSnakeSegment(Rect rctPos)
+    {
+        snakeIcon.Add(TextureHelper.CreateTexture(20, 20, Color.green));
+        snakePos.Add(rctPos);
+    }
 
     private bool SnakeCollidedWithSelf()
     {
-        throw new NotImplementedException();
+        bool didCollide = false;
+
+        if (snakePos.Count <= 4)
+        {
+            return false;
+        }
+        for (int i = 0; i < snakePos.Count; i++)
+        {
+            if (i > 0)
+            {
+                if (snakePos[0].x == snakePos[snakePos.Count - i].x && snakePos[0].y == snakePos[snakePos.Count - i].y)
+                {
+                    didCollide = true;
+                    break;
+                }
+            }
+        }
+
+        return didCollide;
     }
+
+
+    void OnGUI()
+    {
+        for (int i = 0; i < snakeLength; i++)
+        {
+            GUI.DrawTexture(snakePos[i], snakeIcon[i]);
+        }
+    }
+
+    public void Initialize()
+    {
+        print("Snake Initialized");
+
+        snakePos.Clear();
+        snakeIcon.Clear();
+
+        snakeLength = 2;
+
+        moveDelay = 0.5f;
+
+        if (!gameObject.GetComponent<AudioSource>())
+        {
+            move1 = Resources.Load("Sounds/Move1 Blip") as AudioClip;
+            move2 = Resources.Load("Sounds/Move2 Blip") as AudioClip;
+            death = Resources.Load("Sounds/Death") as AudioClip;
+
+            gameObject.AddComponent<AudioSource>();
+
+            // // initialize some audio properties
+            // audio.playOnAwake = false;
+            // audio.loop = false;
+            // audio.clip = move1;
+
+        }
+
+        transform.position = Vector3.zero;
+        transform.rotation = Quaternion.identity;
+        transform.localScale = Vector3.one;
+
+        snakeIcon.Add(TextureHelper.CreateTexture(20, 20, Color.green));
+        snakeIcon.Add(TextureHelper.CreateTexture(20, 20, Color.green));
+
+        snakePos.Add(new Rect(Screen.width * 0.5f - 10, Screen.height * 0.5f - 10, snakeIcon[0].width, snakeIcon[0].height));
+        snakePos.Add(new Rect(Screen.width * 0.5f - 10 + 20, Screen.height * 0.5f - 10, snakeIcon[1].width, snakeIcon[1].height));
+    }
+
+
 }

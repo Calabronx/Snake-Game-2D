@@ -3,42 +3,58 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputHelper : MonoBehaviour
+public class InputHelper
 {
-    internal static bool GetStandardMoveDownDirection()
+
+    public static bool GetStandardMoveMultiInputKeys()
     {
-        throw new NotImplementedException();
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A)) { return true; }
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S)) { return true; }
+        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.D)) { return true; }
+
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.S)) { return true; }
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)) { return true; }
+
+        if (Input.GetKey(KeyCode.S) && Input.GetKey(KeyCode.D)) { return true; }
+
+        if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.LeftArrow)) { return true; }
+        if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.DownArrow)) { return true; }
+        if (Input.GetKey(KeyCode.UpArrow) && Input.GetKey(KeyCode.RightArrow)) { return true; }
+
+        if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.DownArrow)) { return true; }
+        if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.RightArrow)) { return true; }
+
+        if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.RightArrow)) { return true; }
+
+        return false;
     }
 
-    internal static bool GetStandardMoveLeftDirection()
+    public static bool GetStandardMoveUpDirection()
     {
-        throw new NotImplementedException();
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) { return true; }
+
+        return false;
     }
 
-    internal static bool GetStandardMoveMultiInputKeys()
+    public static bool GetStandardMoveLeftDirection()
     {
-        throw new NotImplementedException();
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) { return true; }
+
+        return false;
     }
 
-    internal static bool GetStandardMoveUpDirection()
+    public static bool GetStandarMoveDownDirection()
     {
-        throw new NotImplementedException();
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) { return true; }
+
+        return false;
     }
 
-    internal static bool GetStandarMoveDownDirection()
+    public static bool GetStandardMoveRightDirection()
     {
-        throw new NotImplementedException();
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) { return true; }
+
+        return false;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -15,7 +15,8 @@ public sealed class GameManager : MonoBehaviour
         Lives.Instance.Initialize();
         SnakeGame.Instance.Initialize();
         Food.Instance.Initialize();
-        Snake snake = Snake.GetInstance();
-        SnakeController controller = SnakeController.GetInstance();
+        Snake.Instance.Initialize();
+        ScreenDeath.Instance.Initialize();
+        // SnakeController controller = SnakeController.GetInstance();
     }
 }
